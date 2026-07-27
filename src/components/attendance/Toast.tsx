@@ -43,8 +43,8 @@ function ToastItem({
   const colors = {
     success: {
       bg: "bg-[#0d1f0d] border-[#a8e63d]/40",
-      icon: "text-[#a8e63d]",
-      dot: "bg-[#a8e63d]",
+      icon: "text-primary",
+      dot: "bg-primary",
     },
     error: {
       bg: "bg-[#1f0d0d] border-red-500/40",
@@ -66,10 +66,10 @@ function ToastItem({
       className={`pointer-events-auto flex items-start gap-3 px-4 py-3 rounded-xl border ${c.bg} shadow-2xl backdrop-blur-md min-w-[280px] max-w-[360px] animate-in slide-in-from-bottom-4 fade-in duration-300`}
     >
       <Icon size={18} className={`${c.icon} mt-0.5 flex-shrink-0`} />
-      <p className="text-sm text-white flex-1 leading-snug">{toast.message}</p>
+      <p className="text-sm text-foreground flex-1 leading-snug">{toast.message}</p>
       <button
         onClick={() => onRemove(toast.id)}
-        className="text-gray-500 hover:text-white transition-colors flex-shrink-0"
+        className="text-foreground/50 hover:text-foreground transition-colors flex-shrink-0"
       >
         <X size={14} />
       </button>

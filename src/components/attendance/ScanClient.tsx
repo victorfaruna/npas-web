@@ -202,18 +202,18 @@ function ScanView() {
   // Render
   // ---------------------------------------------------------------------------
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-6xl mx-auto">
       <Toast toasts={toasts} onRemove={removeToast} />
 
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#a8e63d]/10 border border-[#a8e63d]/20 flex items-center justify-center">
-            <ScanFace size={18} className="text-[#a8e63d]" />
+          <div className="w-10 h-10 rounded-xl bg-primary/10 border border-[#a8e63d]/20 flex items-center justify-center">
+            <ScanFace size={18} className="text-primary" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-white">Live Attendance Scan</h2>
-            <p className="text-xs text-gray-500">
+            <h2 className="text-lg font-bold text-foreground">Live Attendance Scan</h2>
+            <p className="text-xs text-foreground/50">
               {employeeCount} employee{employeeCount !== 1 ? "s" : ""} enrolled
             </p>
           </div>
@@ -221,9 +221,9 @@ function ScanView() {
 
         {/* Recognition active dot */}
         {recognizing && (
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-[#a8e63d]/10 border border-[#a8e63d]/20 rounded-full">
-            <span className="w-2 h-2 rounded-full bg-[#a8e63d] animate-pulse" />
-            <span className="text-xs font-bold text-[#a8e63d]">RECOGNISING</span>
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 border border-[#a8e63d]/20 rounded-full">
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <span className="text-xs font-bold text-primary">RECOGNISING</span>
           </div>
         )}
       </div>
@@ -248,7 +248,7 @@ function ScanView() {
           )}
 
           {/* Camera view */}
-          <div className="relative rounded-2xl overflow-hidden bg-black border border-[#222] aspect-video">
+          <div className="relative rounded-2xl overflow-hidden bg-background border border-[#222] aspect-video">
             <video
               ref={videoRef}
               autoPlay
@@ -263,17 +263,17 @@ function ScanView() {
 
             {/* Placeholder when camera is off */}
             {!cameraActive && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#0a0a0a]">
-                <div className="w-16 h-16 rounded-2xl bg-[#181818] border border-[#2a2a2a] flex items-center justify-center">
-                  <ScanFace size={28} className="text-gray-600" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-background">
+                <div className="w-16 h-16 rounded-2xl bg-card border border-border flex items-center justify-center">
+                  <ScanFace size={28} className="text-foreground/40" />
                 </div>
-                <p className="text-sm text-gray-600">Camera is off</p>
+                <p className="text-sm text-foreground/40">Camera is off</p>
               </div>
             )}
 
             {/* Last match banner */}
             {lastMatch && (
-              <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2 bg-[#a8e63d]/90 backdrop-blur-sm rounded-xl px-4 py-2">
+              <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2 bg-primary/90 backdrop-blur-sm rounded-xl px-4 py-2">
                 <span className="w-2 h-2 rounded-full bg-gray-900 animate-pulse" />
                 <span className="text-gray-900 font-bold text-sm">
                   ✓ {lastMatch} — Present
@@ -289,7 +289,7 @@ function ScanView() {
                 id="btn-start-scan"
                 onClick={startCamera}
                 disabled={employeeCount === 0}
-                className="flex-1 flex items-center justify-center gap-2 bg-[#a8e63d] hover:bg-[#bef558] disabled:opacity-40 disabled:cursor-not-allowed text-gray-900 font-bold text-sm px-6 py-3.5 rounded-xl transition-all"
+                className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-[#bef558] disabled:opacity-40 disabled:cursor-not-allowed text-gray-900 font-bold text-sm px-6 py-3.5 rounded-xl transition-all"
               >
                 <ScanFace size={16} />
                 Start Scanning
@@ -307,13 +307,13 @@ function ScanView() {
           </div>
 
           {/* Info */}
-          <div className="grid grid-cols-2 gap-3 text-xs text-gray-500">
-            <div className="bg-[#111] border border-[#1e1e1e] rounded-xl p-3">
-              <p className="font-semibold text-gray-400 mb-1">Recognition</p>
+          <div className="grid grid-cols-2 gap-3 text-xs text-foreground/50">
+            <div className="bg-card border border-border rounded-xl p-3">
+              <p className="font-semibold text-foreground/60 mb-1">Recognition</p>
               <p>Scans every 2 seconds using SSD MobileNet v1</p>
             </div>
-            <div className="bg-[#111] border border-[#1e1e1e] rounded-xl p-3">
-              <p className="font-semibold text-gray-400 mb-1">Deduplication</p>
+            <div className="bg-card border border-border rounded-xl p-3">
+              <p className="font-semibold text-foreground/60 mb-1">Deduplication</p>
               <p>Same employee logged at most once per hour</p>
             </div>
           </div>

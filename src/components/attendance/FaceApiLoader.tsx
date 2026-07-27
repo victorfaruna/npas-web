@@ -131,8 +131,8 @@ export function FaceApiLoadingOverlay() {
             <div className="absolute inset-0 rounded-full border-2 border-t-[#a8e63d] animate-spin" />
           </div>
           <div className="text-center">
-            <p className="text-sm font-semibold text-white">Loading AI Models</p>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-sm font-semibold text-foreground">Loading AI Models</p>
+            <p className="text-xs text-foreground/50 mt-1">
               Initialising face recognition networks…
             </p>
           </div>

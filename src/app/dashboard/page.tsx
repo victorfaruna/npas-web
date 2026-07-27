@@ -26,21 +26,12 @@ import {
 } from "recharts";
 import Link from "next/link";
 
-/* ── mock data ── */
-const powerData = [
-  { time: "00:00", watts: 240 },
-  { time: "04:00", watts: 178 },
-  { time: "08:00", watts: 324 },
-  { time: "12:00", watts: 451 },
-  { time: "16:00", watts: 382 },
-  { time: "20:00", watts: 295 },
-  { time: "23:59", watts: 213 },
-];
+const powerData: { time: string; watts: number }[] = [];
 
 const fade = (delay = 0) => ({
-  initial: { opacity: 0, y: 16 },
+  initial: { opacity: 0, y: 10 },
   animate: { opacity: 1, y: 0 },
-  transition: { delay, duration: 0.45 },
+  transition: { delay, duration: 0.3, ease: "easeOut" },
 });
 
 /* ── Stat card ── */
@@ -63,43 +54,41 @@ const StatCard = ({
 }) => (
   <Link href={href}>
     <motion.div
-      whileHover={{ y: -3 }}
-      className="bg-[#111111] border border-[#232323] rounded-2xl p-6 flex flex-col gap-5 cursor-pointer hover:border-[#a8e63d]/30 transition-all group"
+      whileHover={{ y: -1 }}
+      className="bg-card border border-border rounded-lg p-5 flex flex-col gap-4 cursor-pointer hover:border-border transition-all group"
     >
       <div className="flex items-center justify-between">
         <div
-          className="w-10 h-10 rounded-xl flex items-center justify-center"
-          style={{ background: `${iconColor}18` }}
+          className="w-8 h-8 rounded-md flex items-center justify-center"
+          style={{ background: `${iconColor}14` }}
         >
-          <Icon size={20} style={{ color: iconColor }} />
+          <Icon size={15} style={{ color: iconColor }} />
         </div>
         {trend !== undefined && (
           <span
-            className={`text-[11px] font-bold px-2 py-1 rounded-full flex items-center gap-1 ${
+            className={`text-sm font-semibold px-1.5 py-0.5 rounded flex items-center gap-1 ${
               trend >= 0
-                ? "bg-emerald-500/10 text-emerald-400"
-                : "bg-red-500/10 text-red-400"
+                ? "bg-emerald-500/10 text-emerald-500"
+                : "bg-red-500/10 text-red-500"
             }`}
           >
-            {trend >= 0 ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
+            {trend >= 0 ? <TrendingUp size={9} /> : <TrendingDown size={9} />}
             {Math.abs(trend)}%
           </span>
         )}
       </div>
       <div>
-        <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1">
-          {title}
-        </p>
+        <p className="text-sm font-medium text-foreground/60 mb-1">{title}</p>
         <div className="flex items-baseline gap-1">
-          <span className="text-3xl font-black text-white">{value}</span>
-          <span className="text-gray-500 text-sm font-bold">{unit}</span>
+          <span className="text-xl font-semibold text-foreground ">{value}</span>
+          <span className="text-foreground/60 text-sm font-medium ">{unit}</span>
         </div>
       </div>
       <div className="flex items-center justify-between">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
         <ArrowUpRight
-          size={14}
-          className="text-gray-600 group-hover:text-[#a8e63d] transition-colors"
+          size={13}
+          className="text-foreground/60 group-hover:text-foreground/60 transition-colors"
         />
       </div>
     </motion.div>
@@ -122,22 +111,22 @@ const ModuleRow = ({
   color: string;
   ok: boolean;
 }) => (
-  <div className="flex items-center gap-4 py-3.5 border-b border-[#1a1a1a] last:border-0">
+  <div className="flex items-center gap-3 py-3 border-b border-border last:border-0">
     <div
-      className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-      style={{ background: `${color}18` }}
+      className="w-7 h-7 rounded-md flex items-center justify-center shrink-0"
+      style={{ background: `${color}12` }}
     >
-      <Icon size={16} style={{ color }} />
+      <Icon size={13} style={{ color }} />
     </div>
     <div className="flex-1 min-w-0">
-      <p className="text-sm font-semibold text-white truncate">{name}</p>
-      <p className="text-xs text-gray-500">{detail}</p>
+      <p className="text-sm font-medium text-foreground truncate ">{name}</p>
+      <p className="text-sm text-foreground/60 ">{detail}</p>
     </div>
     <span
-      className={`text-[10px] font-black px-2.5 py-1 rounded-full border ${
+      className={`text-sm font-semibold px-2 py-0.5 rounded border ${
         ok
-          ? "border-emerald-500/30 text-emerald-400 bg-emerald-500/5"
-          : "border-amber-500/30 text-amber-400 bg-amber-500/5"
+          ? "border-emerald-500/20 text-emerald-500 bg-emerald-500/5"
+          : "border-amber-500/20 text-amber-500 bg-amber-500/5"
       }`}
     >
       {status}
@@ -159,22 +148,22 @@ const LogRow = ({
 }) => {
   const chip =
     status === "SAFE"
-      ? "border-emerald-500/30 text-emerald-400 bg-emerald-500/5"
+      ? "border-emerald-500/20 text-emerald-500 bg-emerald-500/5"
       : status === "WARNING"
-      ? "border-amber-500/30 text-amber-400 bg-amber-500/5"
-      : "border-blue-500/30 text-blue-400 bg-blue-500/5";
+      ? "border-amber-500/20 text-amber-500 bg-amber-500/5"
+      : "border-blue-500/20 text-blue-400 bg-blue-500/5";
   return (
-    <div className="flex items-start gap-3 py-3.5 border-b border-[#1a1a1a] last:border-0">
-      <div className="w-10 h-10 rounded-xl bg-[#1a1a1a] flex flex-col items-center justify-center text-[10px] font-bold text-gray-500 shrink-0 leading-tight text-center">
+    <div className="flex items-start gap-3 py-3 border-b border-border last:border-0">
+      <div className="w-9 h-9 rounded-md bg-muted flex flex-col items-center justify-center text-sm font-medium text-foreground/60 shrink-0 leading-tight text-center ">
         {time.split(" ")[0]}
-        <span className="text-gray-600">{time.split(" ")[1]}</span>
+        <span className="text-foreground/60">{time.split(" ")[1]}</span>
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold text-white truncate">{event}</p>
-        <p className="text-xs text-gray-500 mt-0.5">{module}</p>
+        <p className="text-sm font-medium text-foreground truncate ">{event}</p>
+        <p className="text-sm text-foreground/60 mt-0.5 ">{module}</p>
       </div>
       <span
-        className={`text-[10px] font-black px-2.5 py-1 rounded-full border shrink-0 ${chip}`}
+        className={`text-sm font-semibold px-2 py-0.5 rounded border shrink-0 ${chip}`}
       >
         {status}
       </span>
@@ -186,9 +175,9 @@ const LogRow = ({
 const ChartTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-[#1a1a1a] border border-[#333] rounded-xl px-4 py-3 text-xs">
-      <p className="text-gray-400 mb-1">{label}</p>
-      <p className="font-bold text-white">{payload[0].value} W</p>
+    <div className="bg-card border border-border rounded-md px-3 py-2 text-sm">
+      <p className="text-foreground/60 mb-0.5 ">{label}</p>
+      <p className="font-semibold text-foreground ">{payload[0].value} W</p>
     </div>
   );
 };
@@ -200,37 +189,34 @@ export default function DashboardPage() {
   const stats = [
     {
       title: "Power Consumption",
-      value: "1,284",
+      value: "0",
       unit: "kWh",
-      trend: 12.5,
       icon: Zap,
-      iconColor: "#3b82f6",
+      iconColor: "#60a5fa",
       href: "/dashboard/power",
     },
     {
       title: "Water Level",
-      value: "82",
+      value: "0",
       unit: "%",
-      trend: -3.1,
       icon: Droplets,
-      iconColor: "#10b981",
+      iconColor: "#34d399",
       href: "/dashboard/water",
     },
     {
       title: "Battery Charge",
-      value: "94",
+      value: "0",
       unit: "%",
-      trend: -1.2,
       icon: Battery,
-      iconColor: "#a855f7",
+      iconColor: "#a78bfa",
       href: "/dashboard/battery",
     },
     {
       title: "Staff Logged In",
-      value: "7",
+      value: "0",
       unit: "active",
       icon: UserCheck,
-      iconColor: "#f59e0b",
+      iconColor: "#fbbf24",
       href: "/dashboard/attendance",
     },
   ];
@@ -238,142 +224,137 @@ export default function DashboardPage() {
   const modules = [
     {
       name: "Power Grid",
-      status: "235V",
-      detail: "Source: NEPA — Stable",
+      status: "0V",
+      detail: "Awaiting data",
       icon: Zap,
-      color: "#3b82f6",
+      color: "#60a5fa",
       ok: true,
     },
     {
       name: "Water Tank",
-      status: "82%",
-      detail: "Pump: OFF — Auto mode",
+      status: "0%",
+      detail: "Awaiting data",
       icon: Droplets,
-      color: "#10b981",
+      color: "#34d399",
       ok: true,
     },
     {
       name: "Changeover",
-      status: "NEPA",
-      detail: "Generator: Standby",
+      status: "—",
+      detail: "Awaiting data",
       icon: RefreshCcw,
-      color: "#f59e0b",
+      color: "#fbbf24",
       ok: true,
     },
     {
       name: "Battery System",
-      status: "48.2V",
-      detail: "98% charge — Healthy",
+      status: "0V",
+      detail: "Awaiting data",
       icon: Battery,
-      color: "#a855f7",
+      color: "#a78bfa",
       ok: true,
     },
     {
       name: "Fire Detection",
-      status: "ALL CLEAR",
-      detail: "No active alarms",
+      status: "—",
+      detail: "Awaiting data",
       icon: Flame,
-      color: "#ef4444",
+      color: "#f87171",
       ok: true,
     },
     {
       name: "Attendance",
-      status: "7 IN",
-      detail: "Last log: 09:15 AM",
+      status: "0 IN",
+      detail: "No logs yet",
       icon: UserCheck,
-      color: "#f59e0b",
+      color: "#fbbf24",
       ok: true,
     },
   ];
 
-  const logs = [
-    { time: "12:45 PM", event: "NEPA Power Restored", module: "Changeover", status: "SAFE" as const },
-    { time: "11:20 AM", event: "Water Level reached LOW", module: "Water Tank", status: "WARNING" as const },
-    { time: "09:15 AM", event: "RFID Log: John Doe Enter", module: "Attendance", status: "INFO" as const },
-    { time: "08:00 AM", event: "Generator Self-Test Pass", module: "Power", status: "SAFE" as const },
-  ];
+  const logs: { time: string; event: string; module: string; status: "SAFE" | "WARNING" | "INFO" }[] = [];
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-6xl mx-auto">
       {/* Page header */}
-      <motion.div {...fade(0)} className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+      <motion.div {...fade(0)} className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-3">
         <div>
-          <p className="text-[11px] font-black uppercase tracking-[0.25em] text-[#a8e63d] mb-1">
+          <p className="text-sm font-semibold uppercase tracking-widest text-foreground/60 mb-1">
             System Overview
           </p>
-          <h2 className="text-2xl font-black text-white">
+          <h2 className="text-sm font-semibold text-foreground ">
             Real-time Telemetry
           </h2>
-          <p className="text-gray-500 text-sm mt-0.5">
+          <p className="text-foreground/60 text-sm mt-0.5 ">
             All 6 NPAS modules reporting live
           </p>
         </div>
-        <div className="flex gap-3">
-          <button className="flex items-center gap-2 bg-[#111111] border border-[#232323] hover:border-[#333] px-4 py-2.5 rounded-full text-sm font-semibold text-gray-400 hover:text-white transition-all">
+        <div className="flex gap-2">
+          <button className="flex items-center gap-2 bg-muted border border-border hover:border-border px-3.5 py-2 rounded-md text-sm font-medium text-foreground/60 hover:text-foreground transition-all ">
             Export Data
           </button>
           <Link
             href="/dashboard/power"
-            className="flex items-center gap-2 bg-[#a8e63d] text-gray-900 px-4 py-2.5 rounded-full text-sm font-bold hover:brightness-110 transition-all"
+            className="flex items-center gap-1.5 bg-white text-black px-3.5 py-2 rounded-md text-sm font-semibold hover:bg-white/90 transition-all "
           >
             System Report
-            <ArrowUpRight size={15} />
+            <ArrowUpRight size={13} />
           </Link>
         </div>
       </motion.div>
 
       {/* Stat cards */}
-      <motion.div {...fade(0.05)} className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <motion.div {...fade(0.05)} className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
         {stats.map((s, i) => (
           <StatCard key={i} {...s} />
         ))}
       </motion.div>
 
       {/* Charts row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
         {/* Area chart */}
-        <motion.div {...fade(0.1)} className="lg:col-span-2 bg-[#111111] border border-[#232323] rounded-2xl p-6">
-          <div className="flex items-center justify-between mb-6">
+        <motion.div {...fade(0.1)} className="lg:col-span-2 bg-card border border-border rounded-lg p-5">
+          <div className="flex items-center justify-between mb-5">
             <div>
-              <h4 className="text-base font-bold text-white">Power Load History</h4>
-              <p className="text-gray-500 text-xs mt-0.5">Combined load across all modules — past 24h</p>
+              <h4 className="text-sm font-semibold text-foreground ">Power Load History</h4>
+              <p className="text-foreground/60 text-sm mt-0.5 ">Combined load — past 24h</p>
             </div>
-            <select className="bg-[#1a1a1a] border border-[#2a2a2a] text-xs font-semibold text-gray-400 px-3 py-1.5 rounded-lg outline-none cursor-pointer">
+            <select className="bg-muted border border-border text-sm font-medium text-foreground/60 px-2.5 py-1.5 rounded-md outline-none cursor-pointer ">
               <option>Last 24 Hours</option>
               <option>Last 7 Days</option>
             </select>
           </div>
-          <div className="h-[240px]">
+          <div className="h-[220px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={powerData} margin={{ left: -10, right: 4 }}>
                 <defs>
-                  <linearGradient id="limeGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#a8e63d" stopOpacity={0.15} />
-                    <stop offset="100%" stopColor="#a8e63d" stopOpacity={0} />
+                  <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#60a5fa" stopOpacity={0.12} />
+                    <stop offset="100%" stopColor="#60a5fa" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1e1e1e" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1a1a1a" />
                 <XAxis
                   dataKey="time"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: "#4b5563", fontSize: 11 }}
+                  tick={{ fill: "#444", fontSize: 10 }}
                   dy={8}
                 />
                 <YAxis
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: "#4b5563", fontSize: 11 }}
+                  tick={{ fill: "#444", fontSize: 10 }}
                 />
                 <Tooltip content={<ChartTooltip />} />
                 <Area
                   type="monotone"
                   dataKey="watts"
-                  stroke="#a8e63d"
-                  strokeWidth={2.5}
-                  fill="url(#limeGrad)"
+                  stroke="#60a5fa"
+                  strokeWidth={1.5}
+                  fill="url(#blueGrad)"
                   dot={false}
-                  activeDot={{ r: 4, fill: "#a8e63d", strokeWidth: 0 }}
+                  activeDot={{ r: 3, fill: "#60a5fa", strokeWidth: 0 }}
                 />
               </AreaChart>
             </ResponsiveContainer>
@@ -381,39 +362,39 @@ export default function DashboardPage() {
         </motion.div>
 
         {/* Fire safety + connectivity */}
-        <motion.div {...fade(0.15)} className="flex flex-col gap-4">
+        <motion.div {...fade(0.15)} className="flex flex-col gap-3">
           {/* Fire card */}
-          <div className="bg-[#111111] border border-[#232323] rounded-2xl p-6 flex-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-xl bg-red-500/10 flex items-center justify-center">
-                <Flame size={16} className="text-red-500" />
-              </div>
-              <h5 className="text-sm font-bold text-white">Fire Safety</h5>
-            </div>
+          <div className="bg-card border border-border rounded-lg p-5 flex-1">
             <div className="flex items-center gap-2 mb-3">
-              <ShieldCheck size={18} className="text-emerald-400" />
-              <span className="text-emerald-400 font-black text-sm">ALL CLEAR</span>
+              <div className="w-7 h-7 rounded-md bg-red-500/10 flex items-center justify-center">
+                <Flame size={13} className="text-red-400" />
+              </div>
+              <h5 className="text-sm font-semibold text-foreground ">Fire Safety</h5>
             </div>
-            <p className="text-gray-500 text-xs">No active fire or smoke alarms detected across all zones.</p>
-            <div className="mt-4 flex items-center gap-2 bg-[#1a1a1a] rounded-xl px-3 py-2">
+            <div className="flex items-center gap-1.5 mb-2">
+              <ShieldCheck size={14} className="text-emerald-500" />
+              <span className="text-emerald-500 font-semibold text-sm ">ALL CLEAR</span>
+            </div>
+            <p className="text-foreground/60 text-sm ">No active fire or smoke alarms detected.</p>
+            <div className="mt-3 flex items-center gap-2 bg-muted rounded-md px-3 py-2">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-xs text-gray-400 font-semibold">System armed and monitoring</span>
+              <span className="text-sm text-foreground/60 font-medium ">Armed and monitoring</span>
             </div>
           </div>
 
           {/* Connectivity */}
-          <div className="bg-[#111111] border border-[#232323] rounded-2xl p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-xl bg-[#a8e63d]/10 flex items-center justify-center">
-                <Wifi size={16} className="text-[#a8e63d]" />
+          <div className="bg-card border border-border rounded-lg p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-7 h-7 rounded-md bg-muted flex items-center justify-center">
+                <Wifi size={13} className="text-foreground/60" />
               </div>
-              <h5 className="text-sm font-bold text-white">ESP32 Devices</h5>
+              <h5 className="text-sm font-semibold text-foreground ">ESP32 Devices</h5>
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-1.5">
               {["ESP32-Power", "ESP32-Water", "ESP32-Fire", "RFID-Reader"].map((d) => (
-                <div key={d} className="flex items-center gap-2 bg-[#1a1a1a] rounded-lg px-3 py-2">
+                <div key={d} className="flex items-center gap-1.5 bg-muted rounded-md px-2.5 py-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  <span className="text-[11px] font-semibold text-gray-400 truncate">{d}</span>
+                  <span className="text-sm font-medium text-foreground/60 truncate ">{d}</span>
                 </div>
               ))}
             </div>
@@ -422,11 +403,11 @@ export default function DashboardPage() {
       </div>
 
       {/* Bottom row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Module statuses */}
-        <motion.div {...fade(0.2)} className="bg-[#111111] border border-[#232323] rounded-2xl p-6">
-          <h4 className="text-base font-bold text-white mb-1">Module Status</h4>
-          <p className="text-gray-500 text-xs mb-4">Live readings from all 6 sensors</p>
+        <motion.div {...fade(0.2)} className="bg-card border border-border rounded-lg p-5">
+          <h4 className="text-sm font-semibold text-foreground mb-0.5">Module Status</h4>
+          <p className="text-foreground/60 text-sm mb-4 ">Live readings from all 6 sensors</p>
           <div>
             {modules.map((m, i) => (
               <ModuleRow key={i} {...m} />
@@ -435,15 +416,19 @@ export default function DashboardPage() {
         </motion.div>
 
         {/* Activity log */}
-        <motion.div {...fade(0.25)} className="bg-[#111111] border border-[#232323] rounded-2xl p-6">
-          <h4 className="text-base font-bold text-white mb-1">Recent Activity</h4>
-          <p className="text-gray-500 text-xs mb-4">System events from today</p>
+        <motion.div {...fade(0.25)} className="bg-card border border-border rounded-lg p-5">
+          <h4 className="text-sm font-semibold text-foreground mb-0.5">Recent Activity</h4>
+          <p className="text-foreground/60 text-sm mb-4 ">System events from today</p>
           <div>
-            {logs.map((l, i) => (
-              <LogRow key={i} {...l} />
-            ))}
+            {logs.length === 0 ? (
+              <p className="text-sm text-foreground/60 py-4 text-center">No events recorded yet</p>
+            ) : (
+              logs.map((l, i) => (
+                <LogRow key={i} {...l} />
+              ))
+            )}
           </div>
-          <button className="mt-4 w-full text-center text-xs font-bold text-gray-500 hover:text-[#a8e63d] transition-colors py-2 border border-dashed border-[#2a2a2a] rounded-xl hover:border-[#a8e63d]/30">
+          <button className="mt-4 w-full text-center text-sm font-medium text-foreground/60 hover:text-foreground/60 transition-colors py-2 border border-dashed border-border rounded-md hover:border-border ">
             View full history
           </button>
         </motion.div>
