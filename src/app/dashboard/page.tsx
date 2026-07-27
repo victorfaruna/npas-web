@@ -31,7 +31,7 @@ const powerData: { time: string; watts: number }[] = [];
 const fade = (delay = 0) => ({
   initial: { opacity: 0, y: 10 },
   animate: { opacity: 1, y: 0 },
-  transition: { delay, duration: 0.3, ease: "easeOut" },
+  transition: { delay, duration: 0.3, ease: "easeOut" as const },
 });
 
 /* ── Stat card ── */
@@ -172,7 +172,7 @@ const LogRow = ({
 };
 
 /* ── Custom Tooltip ── */
-const ChartTooltip = ({ active, payload, label }: any) => {
+const ChartTooltip = ({ active, payload, label }: { active?: boolean; payload?: { value: number }[]; label?: string }) => {
   if (!active || !payload?.length) return null;
   return (
     <div className="bg-card border border-border rounded-md px-3 py-2 text-sm">

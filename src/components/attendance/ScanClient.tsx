@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ScanFace, CameraOff } from "lucide-react";
-import { FaceApiProvider, FaceApiLoadingOverlay, useFaceApi } from "./FaceApiLoader";
+import { FaceApiLoadingOverlay, useFaceApi } from "./FaceApiLoader";
 import { Toast, useToast } from "./Toast";
 import { AttendanceNav } from "./AttendanceNav";
 
@@ -104,6 +104,7 @@ function ScanView() {
   useEffect(() => {
     if (!cameraActive || !modelsLoaded || !faceapi) return;
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setRecognizing(true);
 
     intervalRef.current = setInterval(async () => {

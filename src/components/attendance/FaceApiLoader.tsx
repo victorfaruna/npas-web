@@ -4,7 +4,6 @@ import React, {
   createContext,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react";
 
@@ -39,11 +38,11 @@ export function useFaceApi() {
 // Provider — loads face-api.js models once per mount
 // ---------------------------------------------------------------------------
 // Global singleton to track loading across component remounts
-let globalLoadPromise: Promise<any> | null = null;
-let globalFaceapi: any = null;
+let globalLoadPromise: Promise<FaceApiModule | null> | null = null;
+let globalFaceapi: FaceApiModule | null = null;
 
 export function FaceApiProvider({ children }: { children: React.ReactNode }) {
-  const [faceapi, setFaceapi] = useState<FaceApiModule>(globalFaceapi);
+  const [faceapi, setFaceapi] = useState<FaceApiModule | null>(globalFaceapi);
   const [modelsLoaded, setModelsLoaded] = useState(!!globalFaceapi);
   const [error, setError] = useState<string | null>(null);
 
@@ -64,8 +63,8 @@ export function FaceApiProvider({ children }: { children: React.ReactNode }) {
       if (!globalLoadPromise) {
         console.log("[FaceApiLoader] Initializing global load promise...");
         globalLoadPromise = (async () => {
-          const module = await import("@vladmandic/face-api");
-          const api = module.default || module;
+          const faceApiModule = await import("@vladmandic/face-api");
+          const api = faceApiModule.default || faceApiModule;
           const MODEL_URL = "/models";
           
           console.log("[FaceApiLoader] Loading models from:", MODEL_URL);

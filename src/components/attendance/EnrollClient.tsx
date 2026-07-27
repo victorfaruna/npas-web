@@ -3,7 +3,6 @@
 import { useRef, useState, useCallback, useEffect } from "react";
 import { Camera, UserPlus, RefreshCw, CheckCircle2 } from "lucide-react";
 import {
-  FaceApiProvider,
   FaceApiLoadingOverlay,
   useFaceApi,
 } from "./FaceApiLoader";
@@ -138,6 +137,7 @@ function EnrollForm() {
     // Average all descriptors into one
     const avgDescriptor = averageDescriptors(descriptors);
     await enrollEmployee(name.trim(), Array.from(avgDescriptor));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [faceapi, modelsLoaded, name, addToast]);
 
   // ---------------------------------------------------------------------------

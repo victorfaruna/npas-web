@@ -10,6 +10,7 @@ export default function ThemeToggle() {
     // Check if theme is already set in localStorage or document
     const currentTheme = document.documentElement.getAttribute("data-theme");
     if (currentTheme === "light") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsLight(true);
     }
   }, []);

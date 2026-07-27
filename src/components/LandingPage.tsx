@@ -341,7 +341,7 @@ const CollaborationSection = () => (
         <div className="space-y-6">
           <p className="text-foreground/60 text-lg leading-relaxed">
             NPAS is built on the foundation of seamless collaboration between hardware engineering and modern software development. 
-            By bridging the gap between ESP32 sensors and real-time data analytics, we've created a unified ecosystem for facility management.
+            By bridging the gap between ESP32 sensors and real-time data analytics, we&apos;ve created a unified ecosystem for facility management.
           </p>
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-4 p-4 rounded-2xl bg-muted border border-border">

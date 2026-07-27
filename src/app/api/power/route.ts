@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
