@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const employee = saveEmployee(name.trim(), face_descriptor);
+    const employee = await saveEmployee(name.trim(), face_descriptor);
     return Response.json({ employee }, { status: 201 });
   } catch (err) {
     console.error("[enroll] error:", err);
