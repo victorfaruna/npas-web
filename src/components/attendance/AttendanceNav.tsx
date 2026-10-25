@@ -15,14 +15,15 @@ export function AttendanceNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex items-center gap-1 p-1 bg-[#111] border border-[#222] rounded-xl mb-6 w-fit">
+    <div className="-mx-4 mb-6 overflow-x-auto px-4 sm:mx-0 sm:px-0 [scrollbar-width:none]">
+    <nav className="flex w-max min-w-full items-center gap-1 rounded-xl border border-[#222] bg-[#111] p-1 sm:min-w-0">
       {tabs.map(({ href, label, icon: Icon, exact }) => {
         const active = exact ? pathname === href : pathname.startsWith(href);
         return (
           <Link
             key={href}
             href={href}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+            className={`flex shrink-0 items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all ${
               active
                 ? "bg-[#a8e63d] text-gray-900"
                 : "text-gray-400 hover:text-white hover:bg-[#1a1a1a]"
@@ -34,5 +35,6 @@ export function AttendanceNav() {
         );
       })}
     </nav>
+    </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useRef, useState, useCallback } from "react";
 import { Camera, UserPlus, RefreshCw, CheckCircle2 } from "lucide-react";
-import { FaceApiProvider, FaceApiLoadingOverlay, useFaceApi } from "./FaceApiLoader";
+import { FaceApiLoadingOverlay, useFaceApi } from "./FaceApiLoader";
 import { Toast, useToast } from "./Toast";
 import { AttendanceNav } from "./AttendanceNav";
 
@@ -119,6 +119,8 @@ function EnrollForm() {
     // Average all descriptors into one
     const avgDescriptor = averageDescriptors(descriptors);
     await enrollEmployee(name.trim(), Array.from(avgDescriptor));
+  // enrollEmployee intentionally remains local because it owns this capture cycle.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [faceapi, modelsLoaded, name, addToast]);
 
   // ---------------------------------------------------------------------------
@@ -149,12 +151,12 @@ function EnrollForm() {
   // Render
   // ---------------------------------------------------------------------------
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto min-w-0">
       <Toast toasts={toasts} onRemove={removeToast} />
 
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-2">
+      <div className="mb-6 sm:mb-8">
+        <div className="flex items-start sm:items-center gap-3 mb-2">
           <div className="w-10 h-10 rounded-xl bg-[#a8e63d]/10 border border-[#a8e63d]/20 flex items-center justify-center">
             <UserPlus size={18} className="text-[#a8e63d]" />
           </div>
@@ -196,7 +198,7 @@ function EnrollForm() {
 
           {/* Camera view */}
           {cameraOpen && (
-            <div className="relative rounded-2xl overflow-hidden bg-black border border-[#222]">
+            <div className="relative rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-[#222]">
               <video
                 ref={videoRef}
                 autoPlay
@@ -214,7 +216,7 @@ function EnrollForm() {
               {/* Countdown overlay */}
               {countdown !== null && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-[#a8e63d] text-8xl font-black drop-shadow-2xl animate-ping">
+                  <span className="text-[#a8e63d] text-6xl sm:text-8xl font-black drop-shadow-2xl animate-ping">
                     {countdown}
                   </span>
                 </div>
@@ -243,7 +245,7 @@ function EnrollForm() {
 
               {/* Face guide overlay */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-48 h-56 border-2 border-[#a8e63d]/40 rounded-full" />
+                <div className="w-32 h-40 sm:w-48 sm:h-56 border-2 border-[#a8e63d]/40 rounded-full" />
               </div>
             </div>
           )}
@@ -259,7 +261,7 @@ function EnrollForm() {
           )}
 
           {/* Action buttons */}
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             {!cameraOpen ? (
               <button
                 id="btn-open-camera"
@@ -294,7 +296,7 @@ function EnrollForm() {
                   id="btn-close-camera"
                   onClick={closeCamera}
                   disabled={capturing}
-                  className="px-4 py-3.5 rounded-xl border border-[#2a2a2a] text-gray-400 hover:text-white hover:border-[#3a3a3a] transition-all disabled:opacity-40"
+                  className="flex items-center justify-center px-4 py-3.5 rounded-xl border border-[#2a2a2a] text-gray-400 hover:text-white hover:border-[#3a3a3a] transition-all disabled:opacity-40"
                 >
                   <RefreshCw size={16} />
                 </button>

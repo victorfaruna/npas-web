@@ -64,7 +64,7 @@ const StatCard = ({
   <Link href={href}>
     <motion.div
       whileHover={{ y: -3 }}
-      className="bg-[#111111] border border-[#232323] rounded-2xl p-6 flex flex-col gap-5 cursor-pointer hover:border-[#a8e63d]/30 transition-all group"
+      className="bg-[#111111] border border-[#232323] rounded-2xl p-5 sm:p-6 flex flex-col gap-5 cursor-pointer hover:border-[#a8e63d]/30 transition-all group"
     >
       <div className="flex items-center justify-between">
         <div
@@ -122,7 +122,7 @@ const ModuleRow = ({
   color: string;
   ok: boolean;
 }) => (
-  <div className="flex items-center gap-4 py-3.5 border-b border-[#1a1a1a] last:border-0">
+  <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-4 py-3.5 border-b border-[#1a1a1a] last:border-0">
     <div
       className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
       style={{ background: `${color}18` }}
@@ -134,7 +134,7 @@ const ModuleRow = ({
       <p className="text-xs text-gray-500">{detail}</p>
     </div>
     <span
-      className={`text-[10px] font-black px-2.5 py-1 rounded-full border ${
+      className={`ml-12 sm:ml-0 text-[10px] font-black px-2.5 py-1 rounded-full border ${
         ok
           ? "border-emerald-500/30 text-emerald-400 bg-emerald-500/5"
           : "border-amber-500/30 text-amber-400 bg-amber-500/5"
@@ -183,7 +183,15 @@ const LogRow = ({
 };
 
 /* ── Custom Tooltip ── */
-const ChartTooltip = ({ active, payload, label }: any) => {
+const ChartTooltip = ({
+  active,
+  payload,
+  label,
+}: {
+  active?: boolean;
+  payload?: Array<{ value: number }>;
+  label?: string;
+}) => {
   if (!active || !payload?.length) return null;
   return (
     <div className="bg-[#1a1a1a] border border-[#333] rounded-xl px-4 py-3 text-xs">
@@ -296,25 +304,25 @@ export default function DashboardPage() {
   return (
     <div className="max-w-7xl mx-auto">
       {/* Page header */}
-      <motion.div {...fade(0)} className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+      <motion.div {...fade(0)} className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 sm:mb-8 gap-4">
         <div>
           <p className="text-[11px] font-black uppercase tracking-[0.25em] text-[#a8e63d] mb-1">
             System Overview
           </p>
-          <h2 className="text-2xl font-black text-white">
+          <h2 className="text-xl sm:text-2xl font-black text-white">
             Real-time Telemetry
           </h2>
           <p className="text-gray-500 text-sm mt-0.5">
             All 6 NPAS modules reporting live
           </p>
         </div>
-        <div className="flex gap-3">
-          <button className="flex items-center gap-2 bg-[#111111] border border-[#232323] hover:border-[#333] px-4 py-2.5 rounded-full text-sm font-semibold text-gray-400 hover:text-white transition-all">
+        <div className="grid grid-cols-2 sm:flex gap-2 sm:gap-3 w-full md:w-auto">
+          <button className="flex items-center justify-center gap-2 bg-[#111111] border border-[#232323] hover:border-[#333] px-3 sm:px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold text-gray-400 hover:text-white transition-all">
             Export Data
           </button>
           <Link
             href="/dashboard/power"
-            className="flex items-center gap-2 bg-[#a8e63d] text-gray-900 px-4 py-2.5 rounded-full text-sm font-bold hover:brightness-110 transition-all"
+            className="flex items-center justify-center gap-2 bg-[#a8e63d] text-gray-900 px-3 sm:px-4 py-2.5 rounded-full text-xs sm:text-sm font-bold hover:brightness-110 transition-all"
           >
             System Report
             <ArrowUpRight size={15} />
@@ -323,7 +331,7 @@ export default function DashboardPage() {
       </motion.div>
 
       {/* Stat cards */}
-      <motion.div {...fade(0.05)} className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <motion.div {...fade(0.05)} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
         {stats.map((s, i) => (
           <StatCard key={i} {...s} />
         ))}
@@ -332,8 +340,8 @@ export default function DashboardPage() {
       {/* Charts row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {/* Area chart */}
-        <motion.div {...fade(0.1)} className="lg:col-span-2 bg-[#111111] border border-[#232323] rounded-2xl p-6">
-          <div className="flex items-center justify-between mb-6">
+        <motion.div {...fade(0.1)} className="lg:col-span-2 bg-[#111111] border border-[#232323] rounded-2xl p-4 sm:p-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
             <div>
               <h4 className="text-base font-bold text-white">Power Load History</h4>
               <p className="text-gray-500 text-xs mt-0.5">Combined load across all modules — past 24h</p>
@@ -343,8 +351,8 @@ export default function DashboardPage() {
               <option>Last 7 Days</option>
             </select>
           </div>
-          <div className="h-[240px]">
-            <ResponsiveContainer width="100%" height="100%">
+          <div className="h-[220px] sm:h-[240px] min-w-0">
+            <ResponsiveContainer width="100%" height="100%" minWidth={0}>
               <AreaChart data={powerData} margin={{ left: -10, right: 4 }}>
                 <defs>
                   <linearGradient id="limeGrad" x1="0" y1="0" x2="0" y2="1">
@@ -383,7 +391,7 @@ export default function DashboardPage() {
         {/* Fire safety + connectivity */}
         <motion.div {...fade(0.15)} className="flex flex-col gap-4">
           {/* Fire card */}
-          <div className="bg-[#111111] border border-[#232323] rounded-2xl p-6 flex-1">
+          <div className="bg-[#111111] border border-[#232323] rounded-2xl p-5 sm:p-6 flex-1">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-xl bg-red-500/10 flex items-center justify-center">
                 <Flame size={16} className="text-red-500" />
@@ -402,7 +410,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Connectivity */}
-          <div className="bg-[#111111] border border-[#232323] rounded-2xl p-6">
+          <div className="bg-[#111111] border border-[#232323] rounded-2xl p-5 sm:p-6">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-xl bg-[#a8e63d]/10 flex items-center justify-center">
                 <Wifi size={16} className="text-[#a8e63d]" />
@@ -424,7 +432,7 @@ export default function DashboardPage() {
       {/* Bottom row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Module statuses */}
-        <motion.div {...fade(0.2)} className="bg-[#111111] border border-[#232323] rounded-2xl p-6">
+        <motion.div {...fade(0.2)} className="bg-[#111111] border border-[#232323] rounded-2xl p-5 sm:p-6">
           <h4 className="text-base font-bold text-white mb-1">Module Status</h4>
           <p className="text-gray-500 text-xs mb-4">Live readings from all 6 sensors</p>
           <div>
@@ -435,7 +443,7 @@ export default function DashboardPage() {
         </motion.div>
 
         {/* Activity log */}
-        <motion.div {...fade(0.25)} className="bg-[#111111] border border-[#232323] rounded-2xl p-6">
+        <motion.div {...fade(0.25)} className="bg-[#111111] border border-[#232323] rounded-2xl p-5 sm:p-6">
           <h4 className="text-base font-bold text-white mb-1">Recent Activity</h4>
           <p className="text-gray-500 text-xs mb-4">System events from today</p>
           <div>

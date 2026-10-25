@@ -116,8 +116,8 @@ export function LogsClient() {
       <AttendanceNav />
 
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+        <div className="flex items-start sm:items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-[#a8e63d]/10 border border-[#a8e63d]/20 flex items-center justify-center">
             <ClipboardList size={18} className="text-[#a8e63d]" />
           </div>
@@ -131,7 +131,7 @@ export function LogsClient() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="grid grid-cols-[auto_1fr] sm:flex items-center gap-2 w-full sm:w-auto">
           <button
             id="btn-refresh-logs"
             onClick={fetchLogs}
@@ -143,7 +143,7 @@ export function LogsClient() {
           <button
             id="btn-export-csv"
             onClick={exportCSV}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#a8e63d]/10 hover:bg-[#a8e63d]/20 border border-[#a8e63d]/30 text-[#a8e63d] text-sm font-semibold transition-all"
+            className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#a8e63d]/10 hover:bg-[#a8e63d]/20 border border-[#a8e63d]/30 text-[#a8e63d] text-sm font-semibold transition-all"
           >
             <Download size={14} />
             Export CSV
@@ -183,9 +183,9 @@ export function LogsClient() {
       </div>
 
       {/* Table */}
-      <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl overflow-hidden">
+      <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-xl sm:rounded-2xl overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full min-w-[620px] text-sm">
             <thead>
               <tr className="border-b border-[#1e1e1e]">
                 <th className="text-left px-5 py-3.5 text-[10px] font-black uppercase tracking-[0.15em] text-gray-600">

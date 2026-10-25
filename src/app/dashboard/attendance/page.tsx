@@ -47,7 +47,7 @@ export default function AttendanceHubPage() {
   return (
     <div>
       {/* Page header */}
-      <div className="flex items-center gap-3 mb-8">
+      <div className="flex items-start sm:items-center gap-3 mb-6 sm:mb-8">
         <div className="w-10 h-10 rounded-xl bg-[#a8e63d]/10 border border-[#a8e63d]/20 flex items-center justify-center">
           <UserCheck size={18} className="text-[#a8e63d]" />
         </div>
@@ -61,14 +61,14 @@ export default function AttendanceHubPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
-        <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl p-5">
+        <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl p-4 sm:p-5">
           <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-600 mb-1">
             Enrolled
           </p>
           <p className="text-3xl font-black text-white">{employees.length}</p>
           <p className="text-xs text-gray-500 mt-1">Total employees</p>
         </div>
-        <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl p-5">
+        <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl p-4 sm:p-5">
           <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-600 mb-1">
             Present Today
           </p>
@@ -81,7 +81,7 @@ export default function AttendanceHubPage() {
             })}
           </p>
         </div>
-        <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl p-5 col-span-2 sm:col-span-1">
+        <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-2xl p-4 sm:p-5 col-span-2 sm:col-span-1">
           <p className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-600 mb-1">
             Total Logs
           </p>
@@ -91,11 +91,11 @@ export default function AttendanceHubPage() {
       </div>
 
       {/* Module cards */}
-      <div className="grid sm:grid-cols-3 gap-4">
+      <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
         {cards.map(({ href, icon: Icon, title, description, cta, color, bg, border }) => (
           <Link key={href} href={href} className="group">
             <div
-              className={`h-full bg-[#0d0d0d] border ${border} rounded-2xl p-6 flex flex-col gap-4 hover:border-opacity-60 transition-all hover:scale-[1.01] hover:shadow-2xl`}
+              className={`h-full bg-[#0d0d0d] border ${border} rounded-2xl p-5 sm:p-6 flex flex-col gap-4 hover:border-opacity-60 transition-all hover:scale-[1.01] hover:shadow-2xl`}
             >
               <div
                 className={`w-12 h-12 rounded-xl ${bg} border ${border} flex items-center justify-center`}

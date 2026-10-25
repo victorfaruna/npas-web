@@ -16,7 +16,7 @@ interface ToastProps {
 
 export function Toast({ toasts, onRemove }: ToastProps) {
   return (
-    <div className="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 pointer-events-none">
+    <div className="fixed bottom-4 left-4 right-4 sm:bottom-6 sm:left-auto sm:right-6 z-[100] flex flex-col gap-3 pointer-events-none">
       {toasts.map((toast) => (
         <ToastItem key={toast.id} toast={toast} onRemove={onRemove} />
       ))}
@@ -63,7 +63,7 @@ function ToastItem({
 
   return (
     <div
-      className={`pointer-events-auto flex items-start gap-3 px-4 py-3 rounded-xl border ${c.bg} shadow-2xl backdrop-blur-md min-w-[280px] max-w-[360px] animate-in slide-in-from-bottom-4 fade-in duration-300`}
+      className={`pointer-events-auto flex w-full sm:w-auto items-start gap-3 px-4 py-3 rounded-xl border ${c.bg} shadow-2xl backdrop-blur-md sm:min-w-[280px] sm:max-w-[360px] animate-in slide-in-from-bottom-4 fade-in duration-300`}
     >
       <Icon size={18} className={`${c.icon} mt-0.5 flex-shrink-0`} />
       <p className="text-sm text-white flex-1 leading-snug">{toast.message}</p>

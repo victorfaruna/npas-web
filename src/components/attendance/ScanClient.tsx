@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ScanFace, CameraOff } from "lucide-react";
-import { FaceApiProvider, FaceApiLoadingOverlay, useFaceApi } from "./FaceApiLoader";
+import { FaceApiLoadingOverlay, useFaceApi } from "./FaceApiLoader";
 import { Toast, useToast } from "./Toast";
 import { AttendanceNav } from "./AttendanceNav";
 
@@ -30,7 +30,6 @@ function ScanView() {
 
   const [cameraActive, setCameraActive] = useState(false);
   const [cameraError, setCameraError] = useState<string | null>(null);
-  const [recognizing, setRecognizing] = useState(false);
   const [lastMatch, setLastMatch] = useState<string | null>(null);
   const [employeeCount, setEmployeeCount] = useState(0);
 
@@ -94,7 +93,6 @@ function ScanView() {
     streamRef.current?.getTracks().forEach((t) => t.stop());
     streamRef.current = null;
     setCameraActive(false);
-    setRecognizing(false);
     setLastMatch(null);
   }, []);
 
@@ -103,8 +101,6 @@ function ScanView() {
   // ---------------------------------------------------------------------------
   useEffect(() => {
     if (!cameraActive || !modelsLoaded || !faceapi) return;
-
-    setRecognizing(true);
 
     intervalRef.current = setInterval(async () => {
       const video = videoRef.current;
@@ -202,12 +198,12 @@ function ScanView() {
   // Render
   // ---------------------------------------------------------------------------
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto min-w-0">
       <Toast toasts={toasts} onRemove={removeToast} />
 
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
+        <div className="flex items-start sm:items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-[#a8e63d]/10 border border-[#a8e63d]/20 flex items-center justify-center">
             <ScanFace size={18} className="text-[#a8e63d]" />
           </div>
@@ -220,10 +216,10 @@ function ScanView() {
         </div>
 
         {/* Recognition active dot */}
-        {recognizing && (
+        {cameraActive && (
           <div className="flex items-center gap-2 px-3 py-1.5 bg-[#a8e63d]/10 border border-[#a8e63d]/20 rounded-full">
             <span className="w-2 h-2 rounded-full bg-[#a8e63d] animate-pulse" />
-            <span className="text-xs font-bold text-[#a8e63d]">RECOGNISING</span>
+            <span className="text-[10px] sm:text-xs font-bold text-[#a8e63d]">RECOGNISING</span>
           </div>
         )}
       </div>
@@ -248,7 +244,7 @@ function ScanView() {
           )}
 
           {/* Camera view */}
-          <div className="relative rounded-2xl overflow-hidden bg-black border border-[#222] aspect-video">
+          <div className="relative rounded-xl sm:rounded-2xl overflow-hidden bg-black border border-[#222] aspect-[4/3] sm:aspect-video">
             <video
               ref={videoRef}
               autoPlay
@@ -273,7 +269,7 @@ function ScanView() {
 
             {/* Last match banner */}
             {lastMatch && (
-              <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2 bg-[#a8e63d]/90 backdrop-blur-sm rounded-xl px-4 py-2">
+              <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 right-2 sm:right-3 flex items-center gap-2 bg-[#a8e63d]/90 backdrop-blur-sm rounded-xl px-3 sm:px-4 py-2">
                 <span className="w-2 h-2 rounded-full bg-gray-900 animate-pulse" />
                 <span className="text-gray-900 font-bold text-sm">
                   ✓ {lastMatch} — Present
@@ -307,7 +303,7 @@ function ScanView() {
           </div>
 
           {/* Info */}
-          <div className="grid grid-cols-2 gap-3 text-xs text-gray-500">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-gray-500">
             <div className="bg-[#111] border border-[#1e1e1e] rounded-xl p-3">
               <p className="font-semibold text-gray-400 mb-1">Recognition</p>
               <p>Scans every 2 seconds using SSD MobileNet v1</p>

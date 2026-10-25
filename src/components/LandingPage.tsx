@@ -32,9 +32,9 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a]/90 backdrop-blur-md border-b border-[#232323]">
-      <div className="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between py-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 min-h-18 flex items-center justify-between py-3 sm:py-4">
         {/* Logo — clip SVG to show icon only */}
-        <div className="relative overflow-hidden" style={{ width: 140, height: 64 }}>
+        <div className="relative overflow-hidden w-[112px] h-14 sm:w-[140px] sm:h-16">
           <Image
             src="/logo.svg"
             alt="NPAS Logo"
@@ -72,7 +72,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile hamburger */}
-        <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
+        <button aria-label="Toggle navigation" aria-expanded={isOpen} className="md:hidden rounded-xl border border-[#2a2a2a] p-2.5 text-white" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X /> : <Menu />}
         </button>
       </div>
@@ -81,7 +81,7 @@ const Navbar = () => {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:hidden absolute top-full left-0 right-0 bg-[#0a0a0a] border-b border-[#232323] p-6 shadow-2xl flex flex-col gap-4"
+          className="md:hidden absolute top-full left-0 right-0 bg-[#0a0a0a] border-b border-[#232323] p-5 shadow-2xl flex flex-col gap-4"
         >
           <Link href="/" className="text-white font-semibold">Home</Link>
           <Link href="#modules" className="text-gray-400">Modules</Link>
@@ -108,7 +108,7 @@ const Col1Card = () => (
     initial={{ opacity: 0, x: -24 }}
     animate={{ opacity: 1, x: 0 }}
     transition={{ delay: 0.3, duration: 0.6 }}
-    className="relative bg-[#0d2b1d] rounded-[1.75rem] p-7 flex flex-col justify-between text-white overflow-hidden h-[360px] border border-[#1a4a2a]"
+    className="relative bg-[#0d2b1d] rounded-[1.5rem] sm:rounded-[1.75rem] p-6 sm:p-7 flex flex-col justify-between text-white overflow-hidden min-h-[300px] sm:h-[360px] border border-[#1a4a2a]"
   >
     {/* decorative rings */}
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -165,9 +165,9 @@ const PhotoCard = ({
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay, duration: 0.55 }}
-    className="relative overflow-hidden rounded-[1.75rem] h-[380px] flex flex-col justify-end group cursor-pointer"
+    className="relative overflow-hidden rounded-[1.5rem] sm:rounded-[1.75rem] h-[300px] sm:h-[380px] flex flex-col justify-end group cursor-pointer"
   >
-    <Image src={src} alt={title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+    <Image src={src} alt={title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw" className="object-cover group-hover:scale-105 transition-transform duration-700" />
     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
 
     {/* Tag */}
@@ -193,7 +193,7 @@ const JoinCard = () => (
     initial={{ opacity: 0, scale: 0.94 }}
     animate={{ opacity: 1, scale: 1 }}
     transition={{ delay: 0.45, duration: 0.5 }}
-    className="bg-[#161616] border border-[#2a2a2a] rounded-[1.75rem] h-[280px] flex flex-col items-center justify-center text-center p-8"
+    className="bg-[#161616] border border-[#2a2a2a] rounded-[1.5rem] sm:rounded-[1.75rem] min-h-[240px] sm:h-[280px] flex flex-col items-center justify-center text-center p-6 sm:p-8"
   >
     <p className="text-white text-xl font-black leading-tight mb-1">Official Agency</p>
     <p className="text-white text-xl font-black leading-tight mb-6">
@@ -219,7 +219,7 @@ const Col5Card = () => (
     animate={{ opacity: 1, x: 0 }}
     transition={{ delay: 0.3, duration: 0.6 }}
     whileHover={{ y: -5 }}
-    className="relative bg-[#0a0a0a] rounded-[2rem] overflow-hidden h-[360px] flex flex-col border border-white/[0.05] group"
+    className="relative bg-[#0a0a0a] rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden h-[340px] sm:h-[360px] flex flex-col border border-white/[0.05] group"
   >
     {/* Animated background patterns */}
     <div className="absolute inset-0 pointer-events-none opacity-20">
@@ -232,6 +232,7 @@ const Col5Card = () => (
         src="/images/collaboration_premium.png"
         alt="Engineering Synergy"
         fill
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
         className="object-cover transition-transform duration-700 group-hover:scale-105"
       />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0a0a]/20 to-[#0a0a0a]" />
@@ -281,8 +282,8 @@ const ModuleCard = ({
 }) => (
   <motion.div
     whileHover={{ y: -4, scale: 1.01 }}
-    className={`relative overflow-hidden bg-[#111111] border border-[#232323] rounded-[2rem] p-8 flex flex-col justify-between group cursor-pointer hover:border-[#a8e63d]/30 hover:shadow-lg hover:shadow-[#a8e63d]/5 transition-all ${
-      size === "large" ? "md:col-span-2 row-span-2 min-h-[400px]" : "min-h-[260px]"
+    className={`relative overflow-hidden bg-[#111111] border border-[#232323] rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-8 flex flex-col justify-between group cursor-pointer hover:border-[#a8e63d]/30 hover:shadow-lg hover:shadow-[#a8e63d]/5 transition-all ${
+      size === "large" ? "md:col-span-2 row-span-2 min-h-[320px] sm:min-h-[400px]" : "min-h-[240px] sm:min-h-[260px]"
     }`}
   >
     <div className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -309,7 +310,7 @@ const StepCard = ({
 }: {
   number: string; title: string; description: string; icon: React.ElementType;
 }) => (
-  <div className="relative p-8 rounded-[2rem] bg-[#111111] border border-[#232323] flex flex-col gap-6 group hover:border-[#a8e63d]/30 transition-all">
+  <div className="relative p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] bg-[#111111] border border-[#232323] flex flex-col gap-6 group hover:border-[#a8e63d]/30 transition-all">
     <div className="w-16 h-16 rounded-2xl bg-[#1a2e1a] flex items-center justify-center border border-[#a8e63d]/20 text-[#a8e63d] group-hover:bg-[#a8e63d] group-hover:text-gray-900 transition-all">
       <Icon className="w-8 h-8" />
     </div>
@@ -322,11 +323,11 @@ const StepCard = ({
 );
 
 const CollaborationSection = () => (
-  <section className="py-24 px-6 relative overflow-hidden">
+  <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 relative overflow-hidden">
     <div className="absolute top-0 right-0 -mr-24 -mt-24 w-96 h-96 bg-[#84cc16]/5 blur-3xl rounded-full" />
     <div className="absolute bottom-0 left-0 -ml-24 -mb-24 w-96 h-96 bg-[#84cc16]/5 blur-3xl rounded-full" />
     
-    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
       <motion.div
         initial={{ opacity: 0, x: -25 }}
         whileInView={{ opacity: 1, x: 0 }}
@@ -334,14 +335,14 @@ const CollaborationSection = () => (
         transition={{ duration: 0.6 }}
       >
         <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#84cc16] mb-4">Collaboration</p>
-        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-8">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-6 sm:mb-8">
           Engineering <span className="text-[#84cc16]">Synergy</span>
         </h2>
         
         <div className="space-y-6">
-          <p className="text-gray-400 text-lg leading-relaxed">
+          <p className="text-gray-400 text-base sm:text-lg leading-relaxed">
             NPAS is built on the foundation of seamless collaboration between hardware engineering and modern software development. 
-            By bridging the gap between ESP32 sensors and real-time data analytics, we've created a unified ecosystem for facility management.
+            By bridging the gap between ESP32 sensors and real-time data analytics, we&apos;ve created a unified ecosystem for facility management.
           </p>
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.05]">
@@ -371,9 +372,9 @@ const CollaborationSection = () => (
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
-        className="relative"
+        className="relative max-w-2xl w-full mx-auto"
       >
-        <div className="relative z-10 p-8 rounded-[2.5rem] bg-gradient-to-br from-[#111111] to-[#0a0a0a] border border-white/[0.08] shadow-2xl">
+        <div className="relative z-10 p-4 sm:p-8 rounded-[1.75rem] sm:rounded-[2.5rem] bg-gradient-to-br from-[#111111] to-[#0a0a0a] border border-white/[0.08] shadow-2xl">
           <Image 
             src="/images/bigmac.svg" 
             alt="Collaboration Synergy" 
@@ -409,16 +410,16 @@ export default function LandingPage() {
       <Navbar />
 
       {/* ── HERO ── */}
-      <section className="pt-32 pb-10 px-6">
+      <section className="pt-28 sm:pt-32 pb-10 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
 
           {/* Headline block */}
-          <div className="text-center mb-10">
+          <div className="text-center mb-8 sm:mb-10">
             <motion.h1
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65 }}
-              className="text-5xl md:text-[4.5rem] font-black text-white tracking-tight leading-[1.1] mb-6 max-w-3xl mx-auto"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-black text-white tracking-tight leading-[1.08] mb-5 sm:mb-6 max-w-3xl mx-auto"
               style={{ fontFamily: "'Georgia', serif" }}
             >
               Smart IoT systems are built with a single platform
@@ -428,7 +429,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.55 }}
-              className="text-gray-400 text-base max-w-md mx-auto leading-relaxed"
+              className="text-gray-400 text-sm sm:text-base max-w-lg mx-auto leading-relaxed"
             >
               NPAS is an IT engineering project, a unified IoT dashboard for monitoring power, water, fire, attendance, and battery systems in real-time using ESP32 hardware.
             </motion.p>
@@ -438,15 +439,15 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35, duration: 0.5 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 mt-8 w-full max-w-md sm:max-w-none mx-auto"
             >
               <Link
                 href="/dashboard"
-                className="px-8 py-3.5 bg-gray-900 text-white font-bold rounded-full hover:bg-[#a8e63d] hover:text-gray-900 transition-all text-sm border border-gray-700"
+                className="text-center px-8 py-3.5 bg-gray-900 text-white font-bold rounded-full hover:bg-[#a8e63d] hover:text-gray-900 transition-all text-sm border border-gray-700"
               >
                 View Dashboard
               </Link>
-              <button className="flex items-center gap-2.5 px-8 py-3.5 bg-transparent border border-[#2e2e2e] text-white font-semibold rounded-full hover:border-[#a8e63d]/40 transition-all text-sm">
+              <button className="flex items-center justify-center gap-2.5 px-8 py-3.5 bg-transparent border border-[#2e2e2e] text-white font-semibold rounded-full hover:border-[#a8e63d]/40 transition-all text-sm">
                 <span className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center">
                   <Play className="w-3 h-3 fill-white" />
                 </span>
@@ -456,7 +457,7 @@ export default function LandingPage() {
           </div>
 
           {/* ── 5-COLUMN STAGGERED BENTO GRID ── */}
-          <div className="grid grid-cols-5 gap-3 mt-12 items-start">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4 mt-10 sm:mt-12 items-start">
 
             {/* Col 1 — dark green stat + bar (top) */}
             <div className="flex flex-col">
@@ -465,7 +466,7 @@ export default function LandingPage() {
             </div>
 
             {/* Col 2 — photo card (staggered down) */}
-            <div className="mt-10">
+            <div className="sm:mt-6 xl:mt-10">
               <PhotoCard
                 src="/images/hero_hardware.png"
                 tag="Power"
@@ -475,12 +476,12 @@ export default function LandingPage() {
             </div>
 
             {/* Col 3 — join card (deepest stagger) */}
-            <div className="mt-20">
+            <div className="sm:col-span-2 xl:col-span-1 xl:mt-20">
               <JoinCard />
             </div>
 
             {/* Col 4 — photo card (same stagger as col 2) */}
-            <div className="mt-10">
+            <div className="sm:mt-6 xl:mt-10">
               <PhotoCard
                 src="/images/hero_water.png"
                 tag="Water / Fire"
@@ -500,19 +501,19 @@ export default function LandingPage() {
       </section>
 
       {/* ── MODULES ── */}
-      <section id="modules" className="py-24 px-6">
+      <section id="modules" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 sm:mb-16 gap-5 sm:gap-6">
             <div>
               <p className="text-xs font-black uppercase tracking-[0.3em] text-[#a8e63d] mb-3">The Modules</p>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">Connected Ecosystem</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">Connected Ecosystem</h2>
             </div>
             <p className="max-w-md text-gray-500 text-base leading-relaxed">
               Every critical engineering module monitored and controlled in real-time. Efficiency powered by IoT.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 auto-rows-fr">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-fr">
             {modules.map((m, i) => (
               <ModuleCard key={i} {...m} />
             ))}
@@ -521,11 +522,11 @@ export default function LandingPage() {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <section className="py-24 px-6 bg-[#070707] border-y border-[#1a1a1a]">
+      <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 bg-[#070707] border-y border-[#1a1a1a]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10 sm:mb-16">
             <p className="text-xs font-black uppercase tracking-[0.3em] text-[#a8e63d] mb-3">How It Works</p>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">From sensor to dashboard</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">From sensor to dashboard</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -537,11 +538,11 @@ export default function LandingPage() {
       </section>
 
       {/* ── DASHBOARD PREVIEW ── */}
-      <section id="dashboard" className="py-24 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+      <section id="dashboard" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.3em] text-[#a8e63d] mb-4">Dashboard</p>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-6">
               Everything in <span className="text-[#a8e63d]">one view</span>
             </h2>
             <p className="text-gray-500 text-base mb-10 leading-relaxed">
@@ -586,7 +587,7 @@ export default function LandingPage() {
                   height={1000} 
                   quality={100}
                   unoptimized
-                  priority
+                  preload
                   className="rounded-xl shadow-2xl w-full h-auto" 
                 />
               </div>
@@ -599,12 +600,12 @@ export default function LandingPage() {
       <CollaborationSection />
 
       {/* ── TEAM ── */}
-      <section id="about" className="py-20 px-6 border-t border-white/[0.04]" style={{ background: "#050505" }}>
+      <section id="about" className="py-16 sm:py-20 px-4 sm:px-6 border-t border-white/[0.04]" style={{ background: "#050505" }}>
         <div className="max-w-7xl mx-auto">
           {/* 1 — Label + Heading */}
           <div className="text-center mb-8">
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#84cc16] mb-3">The Team</p>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white">
               Built by <span className="text-[#84cc16]">students</span>
             </h2>
           </div>
@@ -615,7 +616,7 @@ export default function LandingPage() {
               <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="#84cc16" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 2L2 7l10 5 10-5-10-5zm0 0v10m-8 2l8 4 8-4" />
               </svg>
-              <span className="text-xs font-semibold" style={{ color: "rgba(132,204,22,0.8)" }}>
+              <span className="text-[11px] sm:text-xs font-semibold" style={{ color: "rgba(132,204,22,0.8)" }}>
                 Federal University Oye-Ekiti &nbsp;&middot;&nbsp; Ekiti State, Nigeria
               </span>
             </div>
@@ -627,7 +628,7 @@ export default function LandingPage() {
           </div>
 
           {/* 3 — Supervisor card */}
-          <div className="mb-8 rounded-2xl px-6 py-5" style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.06)", borderLeft: "3px solid #84cc16" }}>
+          <div className="mb-8 rounded-2xl px-5 sm:px-6 py-5" style={{ background: "#0d0d0d", border: "1px solid rgba(255,255,255,0.06)", borderLeft: "3px solid #84cc16" }}>
             <p className="text-[10px] font-black uppercase tracking-widest text-[#84cc16]">Project Supervisor</p>
             <p className="text-white font-bold text-base mt-2">[Supervisor Name]</p>
             <p className="text-gray-500 text-sm">Department of Electrical &amp; Electronics Engineering</p>
@@ -706,7 +707,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer id="contact" className="py-14 border-t border-[#1a1a1a] px-6 bg-[#0a0a0a]">
+      <footer id="contact" className="py-10 sm:py-14 border-t border-[#1a1a1a] px-4 sm:px-6 bg-[#0a0a0a]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           {/* Logo */}
           <div className="relative overflow-hidden" style={{ width: 80, height: 34 }}>
@@ -722,10 +723,10 @@ export default function LandingPage() {
               }}
             />
           </div>
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 text-sm text-center md:text-left">
             &copy; 2026 Niwa Power &amp; Automation Solutions. All rights reserved.
           </p>
-          <div className="flex gap-6 text-sm font-medium text-gray-500">
+          <div className="flex flex-wrap justify-center gap-5 sm:gap-6 text-sm font-medium text-gray-500">
             <Link href="#" className="hover:text-white transition-colors">Privacy</Link>
             <Link href="#" className="hover:text-white transition-colors">Terms</Link>
             <Link href="#" className="hover:text-white transition-colors">Twitter</Link>
