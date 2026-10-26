@@ -38,11 +38,11 @@ export function useFaceApi() {
 // Provider — loads face-api.js models once per mount
 // ---------------------------------------------------------------------------
 // Global singleton to track loading across component remounts
-let globalLoadPromise: Promise<FaceApiModule> | null = null;
+let globalLoadPromise: Promise<FaceApiModule | null> | null = null;
 let globalFaceapi: FaceApiModule | null = null;
 
 export function FaceApiProvider({ children }: { children: React.ReactNode }) {
-  const [faceapi, setFaceapi] = useState<FaceApiModule>(globalFaceapi);
+  const [faceapi, setFaceapi] = useState<FaceApiModule | null>(globalFaceapi);
   const [modelsLoaded, setModelsLoaded] = useState(!!globalFaceapi);
   const [error, setError] = useState<string | null>(null);
 
@@ -130,8 +130,8 @@ export function FaceApiLoadingOverlay() {
             <div className="absolute inset-0 rounded-full border-2 border-t-[#a8e63d] animate-spin" />
           </div>
           <div className="text-center">
-            <p className="text-sm font-semibold text-white">Loading AI Models</p>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-sm font-semibold text-foreground">Loading AI Models</p>
+            <p className="text-xs text-foreground/50 mt-1">
               Initialising face recognition networks…
             </p>
           </div>

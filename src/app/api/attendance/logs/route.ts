@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
     const date = searchParams.get("date") ?? undefined;
     const name = searchParams.get("name") ?? undefined;
 
-    const logs = getLogs({ date, name });
+    const logs = await getLogs({ date, name });
     return Response.json({ logs });
   } catch (err) {
     console.error("[logs] error:", err);

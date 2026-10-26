@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --card: #141414;
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #0a0a0a;
   --card-foreground: #ffffff;
-  --popover: #0a0a0a;
+  --popover: #050505;
   --popover-foreground: #ededed;
   --primary: #a8e63d;
   --primary-foreground: #0a0a0a;
   --secondary: #1a2e1a;
   --secondary-foreground: #ededed;
-  --muted: #1f2937;
+  --muted: #111827;
   --muted-foreground: #9ca3af;
   --accent: #a8e63d;
   --accent-foreground: #0a0a0a;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #232323;
-  --input: #232323;
+  --border: #1a1a1a;
+  --input: #1a1a1a;
   --ring: #a8e63d;
 
   --radius: 0.75rem;
@@ -30,17 +30,47 @@
   --status-info: #3b82f6;
 }
 
+:root[data-theme="light"] {
+  --background: #ffffff;
+  --foreground: #000000;
+  --card: #f9f9f9;
+  --card-foreground: #000000;
+  --popover: #ffffff;
+  --popover-foreground: #0a0a0a;
+  --primary: #8bc34a;
+  --primary-foreground: #ffffff;
+  --secondary: #e2e8f0;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #8bc34a;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #8bc34a;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
+  --color-input: var(--input);
   --color-ring: var(--ring);
 
   --color-safe: var(--status-safe);
@@ -55,11 +85,22 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-family: "Satoshi", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .glass-card {
-  background: #141414;
-  border: 1px solid #232323;
+  background: var(--card);
+  border: 1px solid var(--border);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+button {
+  cursor: pointer;
 }

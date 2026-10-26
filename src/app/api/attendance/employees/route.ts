@@ -2,7 +2,7 @@ import { getEmployees } from "@/lib/attendance-db";
 
 export async function GET() {
   try {
-    const employees = getEmployees();
+    const employees = await getEmployees();
     return Response.json({ employees });
   } catch (err) {
     console.error("[employees] error:", err);

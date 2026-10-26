@@ -22,14 +22,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Deduplicate: reject if already logged within 1 hour
-    if (hasRecentLog(employee_id)) {
+    if (await hasRecentLog(employee_id)) {
       return Response.json(
         { duplicate: true, message: "Already logged within the last hour" },
         { status: 200 }
       );
     }
 
-    const log = saveLog(employee_id, name, status);
+    const log = await saveLog(employee_id, name, status);
 
     // Push to all SSE subscribers
     const payload = `data: ${JSON.stringify(log)}\n\n`;

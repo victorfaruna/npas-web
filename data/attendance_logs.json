@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "id": 1,
+    "employee_id": 2,
+    "name": "Victor fff",
+    "status": "present",
+    "timestamp": "2026-07-27T08:54:39.124Z"
+  }
+]
